@@ -1,6 +1,5 @@
 import * as readline from "readline";
 import { stdin as input, stdout as output } from "process";
-import { promises } from "dns";
 
 const rl = readline.createInterface({ input, output });
 
