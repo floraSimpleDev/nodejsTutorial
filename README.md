@@ -58,3 +58,14 @@ return JSON.parse(contents);
 ```
 await writeFile(file, JSON.stringify(links));
 ```
+
+## 3.3 feedreader.mjs file
+```
+parseInt(string, 10);
+```
+```
+feeds.splice(index, 1);
+```
+```
+close();
+```
