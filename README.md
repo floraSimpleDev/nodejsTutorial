@@ -141,6 +141,12 @@ emitter.on('param', () => {});
 
 ## 4.1 index.mjs and package.json files
 
+create a nodejs json file
+
+```
+npm init -y
+```
+
 ```
 import { createServer } from "http";
 ```
