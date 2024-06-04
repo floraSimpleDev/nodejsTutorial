@@ -87,5 +87,26 @@ let {data} = await axios.get('https://www.reddit.com/r/node.rss');
 let feed = await parser.parseString(data);
 ```
 ```
+rl.close();
+
 close();
+```
+
+## 3.5 feedreader-evt.mjs file
+```
+import {EventEmitter} from 'events';
+const emitter = new EventEmitter();
+```
+```
+rl.setPrompt('Enter command (list, add, del, read, quit): ');
+rl.prompt();
+```
+```
+rl.on('line', () => {});
+```
+```
+emitter.emit(cmdParts[0], cmdParts[1]);
+```
+```
+emitter.on('param', () => {});
 ```
