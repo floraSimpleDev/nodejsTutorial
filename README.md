@@ -31,12 +31,26 @@ try {}
 catch(exception) {}
 ```
 
-## 2.7 feed-manager.mjs file
+## 3.1 feed-manager.mjs file
+1 obtain the absolute directory+file of this file;
+2 obtain the absolute directory of this file;
+  D:\Web_full_stack\5_nodejs\nodejsTutorial\feeds.json
 ```
-const __filename = fileURLToPath(import.meta.url); //obtain the absolute directory+file of this file
-const __dirname = dirname(__filename); //obtain the absolute directory of this file
-const jsonFile = join(__dirname, "feeds.json"); //D:\Web_full_stack\5_nodejs\nodejsTutorial\feeds.json
+const __filename = fileURLToPath(import.meta.url); 
+const __dirname = dirname(__filename); 
+const jsonFile = join(__dirname, "feeds.json");
 ```
 ```
 import.meta.url
 ```
+
+## 3.2 feed-manager.mjs file
+constants.F_OK check if the file exits.
+```
+import { access, constants, readFile, writeFile } from 'fs/promises';
+...
+await access(file, constants.F_OK);
+```
+```
+await readFile(file, {encoding: 'utf-8'});
+``
