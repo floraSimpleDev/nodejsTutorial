@@ -180,3 +180,18 @@ Listening the server:
 ```
 server.listen(port, () => {});
 ```
+
+## 4.2 nodemon install and package.json modify
+
+```
+"main": "index.js",
+"type": "module",
+```
+
+```
+"scripts": {
+  "test": "echo \"Error: no test specified\" && exit 1",
+  "dev": "nodemon index.mjs",
+  "start": "node index.mjs"
+},
+```
