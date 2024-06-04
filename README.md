@@ -69,3 +69,23 @@ feeds.splice(index, 1);
 ```
 close();
 ```
+
+## 3.4 feedreader.mjs file
+npm install axios
+npm install rss-parser
+```
+import axios from 'axios';
+import Parser from 'rss-parser';
+```
+```
+let response = await axios.get('https://www.reddit.com/r/node.rss');
+let data = response.data;
+
+let {data} = await axios.get('https://www.reddit.com/r/node.rss');
+```
+```
+let feed = await parser.parseString(data);
+```
+```
+close();
+```
