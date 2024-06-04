@@ -53,4 +53,8 @@ await access(file, constants.F_OK);
 ```
 ```
 await readFile(file, {encoding: 'utf-8'});
+return JSON.parse(contents);
+```
+```
+await writeFile(file, JSON.stringify(links));
 ```
