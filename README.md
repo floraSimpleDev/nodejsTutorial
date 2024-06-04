@@ -16,11 +16,16 @@ process.stdout.write('');
 require('readline');
 ```
 ```
-readline.createInterface();
+readline.createInterface({input, output});
 ```
 ```
-readline.question();
+readline.question(query, answer);
 ```
 ```
 readline.close();
 ```
+
+## 2.6 calc_es.mjs file
+```
+try {}
+catch(exception) {}
