@@ -29,9 +29,9 @@ readline.close();
 ```
 try {}
 catch(exception) {}
+```
 
 ## 2.7 feed-manager.mjs file
-
 ```
 const __filename = fileURLToPath(import.meta.url); //obtain the absolute directory+file of this file
 const __dirname = dirname(__filename); //obtain the absolute directory of this file
