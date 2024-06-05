@@ -234,3 +234,26 @@ const content = `<!DOCTYPE html>
 ```
 
 ## 4.5
+
+```
+function redirect(response, to) {
+    response.writeHead(302, {location: to, 'Content-Type': 'text/plain'});
+    response.end(`Redirect to ${to}`);
+}
+```
+
+findIndex() and find()
+
+```
+function handleDelete(id) {
+    let index = guitars.findIndex(g => g.id == id);
+
+    // TODO: check index
+
+    guitars.splice(index, 1);
+}
+```
+
+```
+const guitar = guitars.find(g => g.id == id);
+```
