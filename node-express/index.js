@@ -1,4 +1,8 @@
-import express from "express";
+import { start } from "./app/app.js";
+
+start();
+//5.1 code
+/* import express from "express";
 
 const app = express();
 
@@ -13,3 +17,4 @@ app.get("/greet", (req, res) => {
 app.listen(80, () => {
   console.log("Listening at http://localhost");
 });
+ */
