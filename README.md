@@ -364,3 +364,29 @@ import { Router } from "express";
 
 export const routes = new Router();
 ```
+
+## 5.3 using route parameters
+
+/:id parameter
+```
+routes.get("/:id", (req, res) => {
+  const id = parseInt(req.params.id, 10);
+  const guitar = guitars.find((g) => g.id === id);
+
+  res.send(guitar);
+});
+```
+
+route conflict
+```
+routes.get("/:make", (req, res) => {
+  res.send("make method");
+});
+
+routes.get("/:id", (req, res) => {
+  const id = parseInt(req.params.id, 10);
+  const guitar = guitars.find((g) => g.id === id);
+
+  res.send(guitar);
+});
+```
