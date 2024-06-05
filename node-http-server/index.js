@@ -1,5 +1,6 @@
 import { createServer } from "http";
 import guitars from "./data.js";
+import { createList, getGuitarContent, view, getForm } from "./content.js";
 
 const server = createServer((request, response) => {
   /* /delete/id, index 2 is id */
@@ -13,43 +14,20 @@ const server = createServer((request, response) => {
     const url = new URL(request.url, "http://localhost");
     const id = url.searchParams.get("id");
 
-    const content = `
-      <!DOCTYPE html>
-        <html lang="en">
-        <head>
-            <meta charset="UTF-8">
-            <meta http-equiv="X-UA-Compatible" content="IE=edge">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Guitars</title>
-        </head>
-        <body style="font-size: 2rem">
-            ${id ? getGuitarContent(id) : createList()}
-        </body>
-        </html>
-      `;
-    response.end(content);
+    let content = "";
+
+    if (parts.includes("add")) {
+      content = getForm();
+    } else if (id) {
+      const guitar = guitars.find((gui) => gui.id == id);
+      content = getGuitarContent(guitar);
+    } else {
+      content = createList(guitars);
+    }
+
+    response.end(view(content));
   }
 });
-
-const createList = () => `
-  <h2>My Guitars</h2>
-  <ul>
-    ${guitars.map(createListItem).join("\n")}
-  </ul>`;
-
-const createListItem = ({ id, make, model }) =>
-  `<li>
-    <a href="?id=${id}">${make} ${model}</a>
-  </li>`;
-
-function getGuitarContent(id) {
-  const guitar = guitars.find((gui) => gui.id == id);
-
-  return guitar
-    ? `<h2>${guitar.make} ${guitar.model}</h2>
-        <p><a href="/delete/${id}">Delete<a/></p>`
-    : "<p>Guitar does not exist.</p>";
-}
 
 function handleDelete(id) {
   let index = guitars.findIndex((guitar) => guitar.id == id);
