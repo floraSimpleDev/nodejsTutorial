@@ -7,7 +7,7 @@ const server = createServer((request, response) => {
 
   if (parts.includes("delete")) {
     handleDelete(parts[2]); //pass id into handleDelete()
-    redirect(request, "/");
+    redirect(response, "/");
   } else {
     response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
     const url = new URL(request.url, "http://localhost");
@@ -47,7 +47,7 @@ function getGuitarContent(id) {
 
   return guitar
     ? `<h2>${guitar.make} ${guitar.model}</h2>
-        <p><a href="/delete/${id}"><a/>Delete</p>`
+        <p><a href="/delete/${id}">Delete<a/></p>`
     : "<p>Guitar does not exist.</p>";
 }
 
