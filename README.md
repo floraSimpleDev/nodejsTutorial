@@ -318,3 +318,23 @@ else {
   // GET
   else {}
 ```
+
+## 4.8 add static css file
+
+```
+<link rel="stylesheet" href="/assets/css/style.css" />
+```
+
+```
+else if (request.url === "/assets/css/style.css") {
+  try {
+    const cssFileName = "./public/assets/css/style.css";
+    const css = await readFile(cssFileName, { encoding: "utf-8" });
+
+    response.end(css);
+  } catch (err) {
+    response.statusCode = 404;
+    response.end();
+  }
+}
+```
