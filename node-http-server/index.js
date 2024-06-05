@@ -1,9 +1,10 @@
 import { createServer } from "http";
-import { getGuitars, saveGuitar, deleteGuitar } from "./data.js";
-import { createList, getGuitarContent, view, getForm } from "./content.js";
+import { deleteGuitar, getGuitars, saveGuitar } from "./data.js";
+import { createList, getForm, getGuitarContent, view } from "./content.js";
 import { parse } from "querystring";
+import { readFile } from "fs/promises";
 
-const server = createServer((request, response) => {
+const server = createServer(async (request, response) => {
   /* /delete/id, index 2 is id */
   const parts = request.url.split("/");
 
@@ -36,6 +37,16 @@ const server = createServer((request, response) => {
     if (parts.includes("delete")) {
       handleDelete(parts[2]); //pass id into handleDelete()
       redirect(response, "/");
+    } else if (request.url === "/assets/css/style.css") {
+      try {
+        const cssFileName = "./public/assets/css/style.css";
+        const css = await readFile(cssFileName, { encoding: "utf-8" });
+
+        response.end(css);
+      } catch (err) {
+        response.statusCode = 404;
+        response.end();
+      }
     } else {
       response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
       const url = new URL(request.url, "http://localhost");
