@@ -13,6 +13,6 @@ routes.get("/", (req, res) => {
   res.send(guitars);
 });
 
-routes.get("1", (req, res) => {
+routes.get("/1", (req, res) => {
   res.send(guitars[0]);
 });

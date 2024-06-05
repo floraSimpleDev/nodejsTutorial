@@ -356,3 +356,11 @@ app.get("/greet", (req, res) => {
   res.send("Greetings, Earthling!");
 });
 ```
+
+## 5.2 router initiation
+
+```
+import { Router } from "express";
+
+export const routes = new Router();
+```
