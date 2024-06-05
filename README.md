@@ -289,3 +289,32 @@ else {
   response.end(view(content));
 }
 ```
+
+## 4.7 tutorial notes
+
+```
+ if (request.method === "POST") {
+    let body = "";
+
+    request.on("readable", () => {
+      const data = request.read();
+
+      if (data !== null) {
+        body += data;
+      }
+    });
+
+    request.on("end", () => {
+      const guitar = parse(body);
+
+      saveGuitar({
+        make: guitar.guitar_make,
+        model: guitar.guitar_model,
+      });
+
+      redirect(response, "/");
+    });
+  }
+  // GET
+  else {}
+```
