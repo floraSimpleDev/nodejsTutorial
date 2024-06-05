@@ -232,3 +232,127 @@ const content = `<!DOCTYPE html>
 
   response.end(content);
 ```
+
+## 4.5
+
+```
+function redirect(response, to) {
+    response.writeHead(302, {location: to, 'Content-Type': 'text/plain'});
+    response.end(`Redirect to ${to}`);
+}
+```
+
+findIndex() and find()
+
+```
+function handleDelete(id) {
+    let index = guitars.findIndex(g => g.id == id);
+
+    // TODO: check index
+
+    guitars.splice(index, 1);
+}
+```
+
+```
+const guitar = guitars.find(g => g.id == id);
+```
+
+## 4.6 tutorial notes
+
+```
+if (parts.includes("delete")) {
+    handleDelete(parts[2]); //pass id into handleDelete()
+    redirect(response, "/");
+  }
+
+else {
+  response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
+  const url = new URL(request.url, "http://localhost");
+  const id = url.searchParams.get("id");
+
+  let content = "";
+
+  if (parts.includes("add")) {
+    content = getForm();
+  }
+
+  else if (id) {
+    const guitar = guitars.find((gui) => gui.id == id);
+    content = getGuitarContent(guitar);
+  }
+
+  else {
+    content = createList(guitars);
+  }
+
+  response.end(view(content));
+}
+```
+
+## 4.7 tutorial notes
+
+```
+ if (request.method === "POST") {
+    let body = "";
+
+    request.on("readable", () => {
+      const data = request.read();
+
+      if (data !== null) {
+        body += data;
+      }
+    });
+
+    request.on("end", () => {
+      const guitar = parse(body);
+
+      saveGuitar({
+        make: guitar.guitar_make,
+        model: guitar.guitar_model,
+      });
+
+      redirect(response, "/");
+    });
+  }
+  // GET
+  else {}
+```
+
+## 4.8 add static css file
+
+```
+<link rel="stylesheet" href="/assets/css/style.css" />
+```
+
+```
+else if (request.url === "/assets/css/style.css") {
+  try {
+    const cssFileName = "./public/assets/css/style.css";
+    const css = await readFile(cssFileName, { encoding: "utf-8" });
+
+    response.end(css);
+  } catch (err) {
+    response.statusCode = 404;
+    response.end();
+  }
+}
+```
+
+## 5.1 express app - router
+
+main page: /
+
+```
+app.get("/", (req, res) => {
+  res.send("Hello, Express!");
+});
+```
+
+http:localhost/greet page
+
+```
+app.get("/greet", (req, res) => {
+  res.send("Greetings, Earthling!");
+});
+```
