@@ -257,3 +257,35 @@ function handleDelete(id) {
 ```
 const guitar = guitars.find(g => g.id == id);
 ```
+
+## 4.6 tutorial notes
+
+```
+if (parts.includes("delete")) {
+    handleDelete(parts[2]); //pass id into handleDelete()
+    redirect(response, "/");
+  }
+
+else {
+  response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
+  const url = new URL(request.url, "http://localhost");
+  const id = url.searchParams.get("id");
+
+  let content = "";
+
+  if (parts.includes("add")) {
+    content = getForm();
+  }
+
+  else if (id) {
+    const guitar = guitars.find((gui) => gui.id == id);
+    content = getGuitarContent(guitar);
+  }
+
+  else {
+    content = createList(guitars);
+  }
+
+  response.end(view(content));
+}
+```
