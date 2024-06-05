@@ -1,37 +1,64 @@
 import { createServer } from "http";
-import guitars from "./data.js";
+import { getGuitars, saveGuitar, deleteGuitar } from "./data.js";
 import { createList, getGuitarContent, view, getForm } from "./content.js";
+import { parse } from "querystring";
 
 const server = createServer((request, response) => {
   /* /delete/id, index 2 is id */
   const parts = request.url.split("/");
 
-  if (parts.includes("delete")) {
-    handleDelete(parts[2]); //pass id into handleDelete()
-    redirect(response, "/");
-  } else {
-    response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
-    const url = new URL(request.url, "http://localhost");
-    const id = url.searchParams.get("id");
+  const guitars = getGuitars();
 
-    let content = "";
+  if (request.method === "POST") {
+    let body = "";
 
-    if (parts.includes("add")) {
-      content = getForm();
-    } else if (id) {
-      const guitar = guitars.find((gui) => gui.id == id);
-      content = getGuitarContent(guitar);
+    request.on("readable", () => {
+      const data = request.read();
+
+      if (data !== null) {
+        body += data;
+      }
+    });
+
+    request.on("end", () => {
+      const guitar = parse(body);
+
+      saveGuitar({
+        make: guitar.guitar_make,
+        model: guitar.guitar_model,
+      });
+
+      redirect(response, "/");
+    });
+  }
+  // GET
+  else {
+    if (parts.includes("delete")) {
+      handleDelete(parts[2]); //pass id into handleDelete()
+      redirect(response, "/");
     } else {
-      content = createList(guitars);
-    }
+      response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
+      const url = new URL(request.url, "http://localhost");
+      const id = url.searchParams.get("id");
 
-    response.end(view(content));
+      let content = "";
+
+      if (parts.includes("add")) {
+        content = getForm();
+      } else if (id) {
+        const guitar = guitars.find((gui) => gui.id == id);
+        content = getGuitarContent(guitar);
+      } else {
+        content = createList(guitars);
+      }
+
+      response.end(view(content));
+    }
   }
 });
 
 function handleDelete(id) {
-  let index = guitars.findIndex((guitar) => guitar.id == id);
-  guitars.splice(index, 1);
+  deleteGuitar(id);
 }
 
 function redirect(response, to) {
