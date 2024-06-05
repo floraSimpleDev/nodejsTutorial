@@ -42,7 +42,7 @@ const createListItem = ({ id, make, model }) =>
   </li>`;
 
 const getGuitarContent = (id) => {
-  const guitar = guitars.find((gui) => gui.id === id);
+  const guitar = guitars.find((gui) => gui.id == id);
 
   return guitar
     ? `<h2>${guitar.make} ${guitar.model}</h2>`
