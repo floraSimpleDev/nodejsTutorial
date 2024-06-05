@@ -2,20 +2,19 @@ import { createServer } from "http";
 import guitars from "./data.js";
 
 const server = createServer((request, response) => {
-  // /delete/id
+  /* /delete/id, index 2 is id */
   const parts = request.url.split("/");
 
   if (parts.includes("delete")) {
-    handleDelete(parts[2]);
-    redirect(response, "/");
+    handleDelete(parts[2]); //pass id into handleDelete()
+    redirect(request, "/");
   } else {
     response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
-
     const url = new URL(request.url, "http://localhost");
-
     const id = url.searchParams.get("id");
 
-    const content = `<!DOCTYPE html>
+    const content = `
+      <!DOCTYPE html>
         <html lang="en">
         <head>
             <meta charset="UTF-8">
@@ -26,38 +25,34 @@ const server = createServer((request, response) => {
         <body style="font-size: 2rem">
             ${id ? getGuitarContent(id) : createList()}
         </body>
-        </html>`;
-
+        </html>
+      `;
     response.end(content);
   }
 });
 
-const createList = () => `<h2>My Guitars</h2>
-<ul>
+const createList = () => `
+  <h2>My Guitars</h2>
+  <ul>
     ${guitars.map(createListItem).join("\n")}
-</ul>`;
+  </ul>`;
 
 const createListItem = ({ id, make, model }) =>
-  `<li><a href="?id=${id}">${make} ${model}</a></li>`;
+  `<li>
+    <a href="?id=${id}">${make} ${model}</a>
+  </li>`;
 
 function getGuitarContent(id) {
-  const guitar = guitars.find((g) => g.id == id);
+  const guitar = guitars.find((gui) => gui.id == id);
 
-  if (guitar) {
-    return `
-            <h2>${guitar.make} ${guitar.model}</h2>
-            <p><a href="/delete/${id}">Delete</a>
-        `;
-  } else {
-    return "<p>Guitar does not exist</p>.";
-  }
+  return guitar
+    ? `<h2>${guitar.make} ${guitar.model}</h2>
+        <p><a href="/delete/${id}"><a/>Delete</p>`
+    : "<p>Guitar does not exist.</p>";
 }
 
 function handleDelete(id) {
-  let index = guitars.findIndex((g) => g.id == id);
-
-  // TODO: check index
-
+  let index = guitars.findIndex((guitar) => guitar.id == id);
   guitars.splice(index, 1);
 }
 
