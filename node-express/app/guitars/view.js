@@ -1,18 +1,22 @@
 const views = {
-    list({guitars}) {
-        const liElements = guitars.map(({id, make, model}) => `<li><a href="/guitars/${id}>${make} ${model}</a></li>`);
-        
-        return this._layout('
-        <h2>${title}</h2>
-        <ul>${liElements.join('')}
-        </ul>
-        ');
-    },
+  list({ guitars, title }) {
+    const liElements = guitars.map(
+      ({ id, make, model }) =>
+        `<li><a href="/guitars/${id}">${make} ${model}</a></li>`
+    );
 
-    show({}) {},
+    return this._layout(`
+            <h2>${title}</h2>
+            <ul>
+                ${liElements.join("")}
+            </ul>
+        `);
+  },
 
-    _layout(content) {
-        return `
+  show({}) {},
+
+  _layout(content) {
+    return `
         <!DOCTYPE html>
         <html lang="en">
         <head>
@@ -26,7 +30,7 @@ const views = {
             ${content}
         </body>
         </html>`;
-    }
-}
+  },
+};
 
 export const view = (name, data) => views[name](data);
