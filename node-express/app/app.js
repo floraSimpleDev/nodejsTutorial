@@ -3,6 +3,9 @@ import { routes as guitarRoutes } from "./guitars/routes.js";
 
 const app = express();
 
+//using static assets
+app.use(express.static("./public"));
+
 app.use("/guitars", guitarRoutes);
 
 app.get("/", (req, res) => {
