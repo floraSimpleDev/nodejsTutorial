@@ -6,14 +6,19 @@ const views = {
     );
 
     return this._layout(`
-            <h2>${title}</h2>
-            <ul>
-                ${liElements.join("")}
-            </ul>
-        `);
+        <h2>${title}</h2>
+        <ul>
+            ${liElements.join("")}
+        </ul>
+    `);
   },
 
-  show({}) {},
+  show({ guitar }) {
+    return this._layout(`
+        <h2>
+            ${guitar.make} ${guitar.model}
+        </h2>`);
+  },
 
   _layout(content) {
     return `

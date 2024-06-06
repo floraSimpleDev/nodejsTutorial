@@ -1,8 +1,9 @@
 import { getAll, getById, getByMake } from "./model.js";
+import { view } from "./view.js";
 
 export async function listGuitars(req, res) {
   const guitars = await getAll();
-  res.send(guitars);
+  res.send(view("list", { guitars, title: "My Guitars" }));
 }
 
 export async function showGuitar(req, res) {
@@ -11,10 +12,17 @@ export async function showGuitar(req, res) {
   if (id) {
     const guitar = await getById(id);
 
-    guitar ? res.send(guitar) : res.send(404);
+    guitar ? res.send(view("show", { guitar })) : res.send(404);
   } else {
     const found = await getByMake(req.params.id);
 
-    found.length === 0 ? res.send(404) : res.send(found);
+    found.length === 0
+      ? res.send(404)
+      : res.send(
+          view("list", {
+            guitars: found,
+            title: `Guitars Made By ${found[0].make}`,
+          })
+        );
   }
 }
