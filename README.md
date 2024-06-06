@@ -392,3 +392,62 @@ routes.get("/:id", (req, res) => {
   res.send(guitar);
 });
 ```
+
+## 5.4 simple model and controller files
+
+```
+export async function listGuitars(req, res) {
+  const guitars = await getAll();
+  res.send(guitars);
+}
+
+...
+
+export async function showGuitar(req, res) {
+  const id = parseInt(req.params.id);
+
+  if (id) {
+    const guitar = await getById(id);
+
+    guitar ? res.send(guitar) : res.send(404);
+  } else {
+    const found = await getByMake(req.params.id);
+
+    found.length === 0 ? res.send(404) : res.send(found);
+  }
+}
+```
+
+```
+routes.get("/", listGuitars);
+
+...
+
+routes.get("/:id", showGuitar);
+```
+
+## 5.5 simple view file
+
+in view.js:
+
+```
+const views = {
+  list() {},
+
+  show() {},
+
+  _layout(content) {},
+};
+
+export const view = (name, data) => views[name](data);
+```
+
+in controller.js:
+
+```
+res.send(view("list", { guitars, title: "My Guitars" }));
+
+...
+
+guitar ? res.send(view("show", { guitar })) : res.send(404);
+```
