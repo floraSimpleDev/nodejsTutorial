@@ -451,3 +451,12 @@ res.send(view("list", { guitars, title: "My Guitars" }));
 
 guitar ? res.send(view("show", { guitar })) : res.send(404);
 ```
+
+## 5.6 simple static file
+
+in app.js:
+
+```
+//using static assets
+app.use(express.static("./public"));
+```
