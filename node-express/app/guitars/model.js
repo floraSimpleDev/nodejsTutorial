@@ -1,3 +1,7 @@
+let id = 1;
+
+const getId = () => id++;
+
 const guitars = [
   { id: 1, make: "Fender", model: "Strat" },
   { id: 2, make: "PRS", model: "Starla" },
@@ -19,4 +23,16 @@ export function getByMake(make) {
   const found = guitars.filter((g) => g.make.toLocaleLowerCase() === make);
 
   return Promise.resolve(found);
+}
+
+export function addGuitar(make, model) {
+  const guitar = {
+    id: getId(),
+    make,
+    model,
+  };
+
+  guitars.push(guitar);
+
+  return Promise.resolve(guitar);
 }
