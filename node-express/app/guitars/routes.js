@@ -1,15 +1,21 @@
 import { Router } from "express";
-import { listGuitars, showGuitar } from "./controller.js";
-
+import {
+  createGuitar,
+  editGuitar,
+  listGuitars,
+  showGuitar,
+  storeGuitar,
+  updateGuitar,
+  deleteGuitar,
+} from "./controller.js";
 export const routes = new Router();
 
 // /guitars
-routes.get("/", listGuitars);
 
-/* route conflict
- routes.get("/:make", (req, res) => {
-  res.send("make method");
-});
- */
-// http://localhost/guitars/1
+routes.get("/", listGuitars);
+routes.post("/", storeGuitar);
+routes.get("/create", createGuitar);
+routes.get("/:id/edit", editGuitar);
+routes.get("/:id/delete", deleteGuitar);
 routes.get("/:id", showGuitar);
+routes.post("/:id", updateGuitar);

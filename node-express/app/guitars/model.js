@@ -1,8 +1,12 @@
+let id = 1;
+
+const getId = () => id++;
+
 const guitars = [
-  { id: 1, make: "Fender", model: "Strat" },
-  { id: 2, make: "PRS", model: "Starla" },
-  { id: 3, make: "Gibson", model: "Les Paul" },
-  { id: 4, make: "PRS", model: "Vela" },
+  { id: getId(), make: "Fender", model: "Strat" },
+  { id: getId(), make: "PRS", model: "Starla" },
+  { id: getId(), make: "Gibson", model: "Les Paul" },
+  { id: getId(), make: "PRS", model: "Vela" },
 ];
 
 export function getAll() {
@@ -19,4 +23,28 @@ export function getByMake(make) {
   const found = guitars.filter((g) => g.make.toLocaleLowerCase() === make);
 
   return Promise.resolve(found);
+}
+
+export function addGuitar(make, model) {
+  const guitar = {
+    id: getId(),
+    make,
+    model,
+  };
+
+  guitars.push(guitar);
+
+  return Promise.resolve(guitar);
+}
+
+export function removeGuitar(guitar) {
+  const index = guitars.indexOf(guitar);
+
+  guitars.splice(index, 1);
+
+  return Promise.resolve(true);
+}
+
+export function saveGuitar(guitar) {
+  return Promise.resolve(true);
 }

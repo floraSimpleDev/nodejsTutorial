@@ -1,4 +1,30 @@
 const views = {
+  form(guitar) {
+    let action = "/guitars",
+      make = "",
+      model = "";
+
+    if (guitar) {
+      action = `/guitars/${guitar.id}`;
+      make = guitar.make;
+      model = guitar.model;
+    }
+
+    return this._layout(`
+        <form method="post" action="/${action}">
+            <div>
+                Make: <input type="text" name="guitar_make" />
+            </div>
+            <div>
+                Model: <input type="text" name="guitar_model" />
+            </div>
+            <div>
+                <button type="submit">Save</button>
+            </div>
+        </form>
+    `);
+  },
+
   list({ guitars, title }) {
     const liElements = guitars.map(
       ({ id, make, model }) =>
