@@ -1,4 +1,20 @@
 const views = {
+  form() {
+    return this._layout(`
+        <form method="post" action="/guitars">
+            <div>
+                Make: <input type="text" name="guitar_make" />
+            </div>
+            <div>
+                Model: <input type="text" name="guitar_model" />
+            </div>
+            <div>
+                <button type="submit">Save</button>
+            </div>
+        </form>
+    `);
+  },
+
   list({ guitars, title }) {
     const liElements = guitars.map(
       ({ id, make, model }) =>

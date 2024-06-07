@@ -1,6 +1,10 @@
 import { getAll, getById, getByMake } from "./model.js";
 import { view } from "./view.js";
 
+export async function createGuitar(req, res) {
+  res.send(view("form"));
+}
+
 export async function listGuitars(req, res) {
   const guitars = await getAll();
   res.send(view("list", { guitars, title: "My Guitars" }));

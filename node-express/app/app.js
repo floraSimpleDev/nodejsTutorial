@@ -6,6 +6,9 @@ const app = express();
 //using static assets
 app.use(express.static("./public"));
 
+// parse enqury into form
+app.use(express.urlencoded({ extended: false }));
+
 app.use("/guitars", guitarRoutes);
 
 app.get("/", (req, res) => {
