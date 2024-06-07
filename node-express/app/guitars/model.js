@@ -37,6 +37,14 @@ export function addGuitar(make, model) {
   return Promise.resolve(guitar);
 }
 
+export function removeGuitar(guitar) {
+  const index = guitars.indexOf(guitar);
+
+  guitars.splice(index, 1);
+
+  return Promise.resolve(true);
+}
+
 export function saveGuitar(guitar) {
   return Promise.resolve(true);
 }

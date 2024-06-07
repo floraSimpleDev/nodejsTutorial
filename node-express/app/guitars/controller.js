@@ -1,8 +1,34 @@
-import { getAll, getById, getByMake, addGuitar, saveGuitar } from "./model.js";
+import {
+  getAll,
+  getById,
+  getByMake,
+  addGuitar,
+  removeGuitar,
+  saveGuitar,
+} from "./model.js";
 import { view } from "./view.js";
 
 export async function createGuitar(req, res) {
   res.send(view("form"));
+}
+
+export async function deleteGuitar(req, res) {
+  const id = parseInt(req.params.id, 10);
+
+  if (!id) {
+    res.send(404);
+    return;
+  }
+
+  const guitar = await getById(id);
+
+  if (!guitar) {
+    res.send(404);
+    return;
+  }
+
+  await removeGuitar(guitar);
+  res.redirect("/guitars");
 }
 
 export async function editGuitar(req, res) {
