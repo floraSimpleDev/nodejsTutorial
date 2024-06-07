@@ -460,3 +460,11 @@ in app.js:
 //using static assets
 app.use(express.static("./public"));
 ```
+
+## 5.7 processing creation forms
+
+post the data from the form:
+
+```
+routes.post("/", storeGuitar);
+```
