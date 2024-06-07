@@ -3,10 +3,7 @@ import { routes as guitarRoutes } from "./guitars/routes.js";
 
 const app = express();
 
-//using static assets
 app.use(express.static("./public"));
-
-// parse enqury into form
 app.use(express.urlencoded({ extended: false }));
 
 app.use("/guitars", guitarRoutes);
@@ -15,7 +12,11 @@ app.get("/", (req, res) => {
   res.send("Home Page");
 });
 
-// /-- Home Page
+app.get("/sum/:a-:b", (req, res) => {
+  res.send(`${parseInt(req.params.a) + parseInt(req.params.b)}`);
+});
+
+// / -- Home Page
 // /guitars -- index page/list
 // /guitars/id -- individual guitar by id
 
