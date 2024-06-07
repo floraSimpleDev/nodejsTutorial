@@ -3,10 +3,10 @@ let id = 1;
 const getId = () => id++;
 
 const guitars = [
-  { id: 1, make: "Fender", model: "Strat" },
-  { id: 2, make: "PRS", model: "Starla" },
-  { id: 3, make: "Gibson", model: "Les Paul" },
-  { id: 4, make: "PRS", model: "Vela" },
+  { id: getId(), make: "Fender", model: "Strat" },
+  { id: getId(), make: "PRS", model: "Starla" },
+  { id: getId(), make: "Gibson", model: "Les Paul" },
+  { id: getId(), make: "PRS", model: "Vela" },
 ];
 
 export function getAll() {
@@ -35,4 +35,8 @@ export function addGuitar(make, model) {
   guitars.push(guitar);
 
   return Promise.resolve(guitar);
+}
+
+export function saveGuitar(guitar) {
+  return Promise.resolve(true);
 }

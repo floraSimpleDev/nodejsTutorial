@@ -1,9 +1,11 @@
 import { Router } from "express";
 import {
+  createGuitar,
+  editGuitar,
   listGuitars,
   showGuitar,
-  createGuitar,
   storeGuitar,
+  updateGuitar,
 } from "./controller.js";
 
 export const routes = new Router();
@@ -15,5 +17,9 @@ routes.post("/", storeGuitar);
 
 routes.get("/create", createGuitar);
 
+routes.get("/:id/edit", editGuitar);
+
 // http://localhost/guitars/1
 routes.get("/:id", showGuitar);
+
+routes.post("/:id", updateGuitar);

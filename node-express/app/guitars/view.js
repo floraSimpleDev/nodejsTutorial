@@ -1,7 +1,17 @@
 const views = {
-  form() {
+  form(guitar) {
+    let action = "/guitars",
+      make = "",
+      model = "";
+
+    if (guitar) {
+      action = `/guitars/${guitar.id}`;
+      make = guitar.make;
+      model = guitar.model;
+    }
+
     return this._layout(`
-        <form method="post" action="/guitars">
+        <form method="post" action="/${action}">
             <div>
                 Make: <input type="text" name="guitar_make" />
             </div>

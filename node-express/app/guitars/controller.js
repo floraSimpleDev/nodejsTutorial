@@ -1,8 +1,26 @@
-import { getAll, getById, getByMake, addGuitar } from "./model.js";
+import { getAll, getById, getByMake, addGuitar, saveGuitar } from "./model.js";
 import { view } from "./view.js";
 
 export async function createGuitar(req, res) {
   res.send(view("form"));
+}
+
+export async function editGuitar(req, res) {
+  const id = parseInt(req.params.id, 10);
+
+  if (id) {
+    res.send(404);
+    return;
+  }
+
+  const guitar = await getById(id);
+
+  if (!guitar) {
+    res.send(404);
+    return;
+  }
+
+  res.send(view("form", guitar));
 }
 
 export async function listGuitars(req, res) {
@@ -39,5 +57,33 @@ export async function storeGuitar(req, res) {
     res.redirect("/guitars");
   } else {
     res.redirect("/guitars/create");
+  }
+}
+
+export async function updateGuitar(req, res) {
+  const id = parseInt(req.params.id, 10);
+
+  if (id) {
+    res.send(404);
+    return;
+  }
+
+  const guitar = await getById(id);
+
+  if (!guitar) {
+    res.send(404);
+    return;
+  }
+
+  const { guitar_make, guitar_model } = req.body;
+
+  if (guitar_make && guitar_model) {
+    guitar.make = guitar_make;
+    guitar.model = guitar_model;
+
+    await saveGuitar(guitar);
+    res.redirect(`/guitars/${id}`);
+  } else {
+    res.redirect(`/guitars/${id}/edit`);
   }
 }
